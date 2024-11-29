@@ -109,11 +109,3 @@ gym.register(
 
 env = gym.make("gymnasium_env/Duopoly-v0")
 
-observation, info = env.reset()
-
-while True:
-    action = env.action_space.sample() 
-    observation, reward, terminated, truncated, info = env.step(action) 
-    env.render()
-
-env.close()
