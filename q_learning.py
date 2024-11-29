@@ -19,7 +19,7 @@ class DuopolyEnv(gym.Env):
         self.b = b
         self.cost0 = cost0
         self.cost1 = cost1
-        self._max_profit = ((self.a - self.cost0)*(self.a + self.cost0)*2)/(9 * self.b)
+        self._max_profit = (self.a - self.cost0)*(self.a + self.cost0)/(9 * self.b)
 
         # location of f1 and f2
         self._quantity0 = 0.0
@@ -50,7 +50,7 @@ class DuopolyEnv(gym.Env):
         )
 
     def step(self, action):
-        action = action[0]
+        
         if self.turn == 0:
             expected_quantity = (self.a - self.b * self._quantity1 - self.cost0) / (2 * self.b)
             expected_profit = (self.a - self.b * (expected_quantity + self._quantity1) - self.cost0) * expected_quantity
@@ -71,7 +71,7 @@ class DuopolyEnv(gym.Env):
 
             reward = self._profit1 - expected_profit
 
-        terminated = (self._quantity0 != self._quantity1)
+        terminated = (self._quantity0 == self._quantity1)
         truncated = False
 
         observation = self._get_obs()
