@@ -25,14 +25,12 @@ class OneDuopoly(gym.Env):
         self.action_space = gym.spaces.Discrete(n = 101, start=-50)
 
     def step(self, action):
-        expected_quantity1 = (self.a - self.cost - self.b * self._quantity2) / (2 * self.b)
-        expected_profit1 = (self.a - self.cost - self.b * (expected_quantity1 + self._quantity2)) * expected_quantity1
-
         self._quantity1 = np.clip(self._quantity1 + action, 0, self._max_production)
         self._profit1 = (self.a - self.cost - self.b * (self._quantity1 + self._quantity2)) * self._quantity1
 
         self._quantity2 = (self.a - self.cost - self.b * self._quantity1) / (2 * self.b)
         self._profit2 = (self.a - self.cost - self.b * (self._quantity1 + self._quantity2)) * self._quantity2
+        
         reward = self._profit1 + self._profit2
 
         terminated = (abs(self._quantity1 - self._quantity2) < 2) and self._quantity1 > 20
